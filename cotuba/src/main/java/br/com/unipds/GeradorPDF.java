@@ -17,8 +17,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-@ApplicationScoped @Named("geradorPDF")
-public class GeradorPDF implements GeradorEbook  {
+@FormatoEbookQualifier(FormatoEbook.PDF)
+@ApplicationScoped
+public class GeradorPDF implements GeradorEbook {
 
     public void gerar(Ebook ebook) {
 
@@ -61,5 +62,8 @@ public class GeradorPDF implements GeradorEbook  {
         } catch (Exception ex) {
             throw new IllegalStateException("Erro ao gerar PDF: " + arquivoSaida.toAbsolutePath(), ex);
         }
+
+
     }
+
 }
