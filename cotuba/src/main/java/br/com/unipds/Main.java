@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 import com.itextpdf.kernel.pdf.PdfOutline;
 import com.itextpdf.kernel.pdf.navigation.PdfExplicitDestination;
+import jakarta.enterprise.inject.se.SeContainer;
+import jakarta.enterprise.inject.se.SeContainerInitializer;
 import nl.siegmann.epublib.domain.*;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -53,13 +55,14 @@ public class Main {
 
         boolean modoVerboso = true;
 
-        try {
-            var leitorOperacoesCLI = new LeitorOperacoesCLI();
+
+        try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
+            var leitorOperacoesCLI = container.select(LeitorOperacoesCLI.class).get();
             ParametrosCotuba parametrosCotuba = leitorOperacoesCLI.ler(args);
 
             modoVerboso = parametrosCotuba.isModoVerboso();
 
-            var cotubaService = new CotubaService();
+            var cotubaService = container.select(CotubaService.class).get();
             cotubaService.executar(parametrosCotuba);
 
 
