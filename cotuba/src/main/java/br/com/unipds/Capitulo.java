@@ -1,46 +1,10 @@
 package br.com.unipds;
 
+import io.soabase.recordbuilder.core.RecordBuilder;
+
 import java.nio.file.Path;
 
-public class Capitulo {
+@RecordBuilder
+public record Capitulo(String titulo, Markdown markdown, String html) {
 
-
-    private String titulo;
-
-    private Path arquivoMarkdown;
-    private String markdown;
-
-    private String html;
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public Path getArquivoMarkdown() {
-        return arquivoMarkdown;
-    }
-
-    public void setArquivoMarkdown(Path arquivoMarkdown) {
-        this.arquivoMarkdown = arquivoMarkdown;
-    }
-
-    public String getMarkdown() {
-        return markdown;
-    }
-
-    public void setMarkdown(String markdown) {
-        this.markdown = markdown;
-    }
-
-    public String getHtml() {
-        return html;
-    }
-
-    public void setHtml(String html) {
-        this.html = html;
-    }
 }

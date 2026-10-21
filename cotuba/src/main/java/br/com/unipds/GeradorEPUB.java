@@ -24,20 +24,20 @@ public class GeradorEPUB implements GeradorEbook {
 
     @Override
     public void gerar(Ebook ebook) {
-        List<Capitulo> capitulos = ebook.getCapitulos();
-        Path arquivoSaida = ebook.getArquivoSaida();
+        List<Capitulo> capitulos = ebook.capitulos();
+        Path arquivoSaida = ebook.arquivoSaida();
 
         try {
             var epub = new Book();
 
-            epub.getMetadata().addTitle(ebook.getTitulo());
-            epub.getMetadata().addAuthor(new Author(ebook.getAutor()));
+            epub.getMetadata().addTitle(ebook.titulo());
+            epub.getMetadata().addAuthor(new Author(ebook.autor()));
 
             boolean[] ehPrimeiroCapitulo = {true};
 
             capitulos.forEach(capitulo -> {
-                String html = capitulo.getHtml();
-                String tituloCapitulo = capitulo.getTitulo();
+                String html = capitulo.html();
+                String tituloCapitulo = capitulo.titulo();
 
                 try {
                     StringWriter sw = new StringWriter();
@@ -49,7 +49,7 @@ public class GeradorEPUB implements GeradorEbook {
 
                     writer.writeStartElement("head");
                     writer.writeStartElement("title");
-                    writer.writeCharacters(ebook.getTitulo());
+                    writer.writeCharacters(ebook.titulo());
                     writer.writeEndElement();
                     writer.writeEndElement();
 
@@ -72,7 +72,7 @@ public class GeradorEPUB implements GeradorEbook {
                     }
 
                 } catch (XMLStreamException ex) {
-                    throw new IllegalStateException("Erro ao criar capitulo do epub: " + capitulo.getTitulo(), ex);
+                    throw new IllegalStateException("Erro ao criar capitulo do epub: " + capitulo.titulo(), ex);
                 }
             });
 

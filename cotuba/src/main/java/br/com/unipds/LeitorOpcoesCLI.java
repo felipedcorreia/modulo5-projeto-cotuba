@@ -10,10 +10,9 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 
 @ApplicationScoped
-public class LeitorOperacoesCLI {
+public class LeitorOpcoesCLI {
 
-
-    public ParametrosCotuba ler(String[] args){
+    public ParametrosCotuba ler(String[] args) {
         var options = new Options();
 
         var opcaoDeDiretorioDosMD = new Option("d", "dir", true,
@@ -49,10 +48,7 @@ public class LeitorOperacoesCLI {
             Path diretorioDosMD;
             FormatoEbook formato;
             Path arquivoDeSaida;
-            Boolean modoVerboso = true;
-
-            var parametrosCotuba = new ParametrosCotuba();
-
+            boolean modoVerboso = true;
 
             String nomeDoDiretorioDosMD = cmd.getOptionValue("dir");
 
@@ -71,8 +67,8 @@ public class LeitorOperacoesCLI {
             if (nomeDoFormatoDoEbook != null) {
                 try {
                     formato = FormatoEbook.valueOf(nomeDoFormatoDoEbook.toUpperCase());
-                } catch (IllegalArgumentException e) {
-                    throw new IllegalArgumentException("Formato do ebook inválido: " + nomeDoFormatoDoEbook, e);
+                } catch (IllegalArgumentException ex) {
+                    throw new IllegalArgumentException("Formato do ebook inválido: " + nomeDoFormatoDoEbook, ex);
                 }
             } else {
                 formato = FormatoEbook.PDF;
@@ -94,15 +90,12 @@ public class LeitorOperacoesCLI {
 
             modoVerboso = cmd.hasOption("verbose");
 
-            parametrosCotuba.setDiretorioDosMD(diretorioDosMD);
-            parametrosCotuba.setArquivoDeSaida(arquivoDeSaida);
-            parametrosCotuba.setFormato(formato);
-            parametrosCotuba.setModoVerboso(modoVerboso);
+            return new ParametrosCotuba(diretorioDosMD, formato, arquivoDeSaida, modoVerboso);
 
-            return parametrosCotuba;
-
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
+        } catch (Exception ex) {
+            throw new IllegalStateException(ex);
         }
+
     }
+
 }
